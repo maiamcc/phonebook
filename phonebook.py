@@ -3,6 +3,7 @@
 
 import os
 import cPickle
+import sys
 
 class ArgumentError(Exception): pass
 
@@ -31,7 +32,7 @@ def add(name, number, phonebook):
             changes, use update_number or update_name.")
     else:
         phonebook_data[name] = number
-        print phonebook_data
+        print "Entry added:", name, number
         save(phonebook_data, phonebook)
 
 
@@ -47,8 +48,7 @@ def update_number(name, number, phonebook):
         print "Previous entry:", name, phonebook_data[name]
         phonebook_data[name] = number
         print "New entry:", name, phonebook_data[name]
-
-    save(phonebook_data, phonebook)
+        save(phonebook_data, phonebook)
 
 def update_name(old_name, new_name, phonebook):
     """Updates an entry of given name with new name. Exact
@@ -64,8 +64,20 @@ def update_name(old_name, new_name, phonebook):
         del phonebook_data[old_name]
         phonebook_data[new_name] = number
         print "New entry:", new_name, phonebook_data[new_name]
+        save(phonebook_data, phonebook)
 
-    save(phonebook_data, phonebook)
+def delete(name, phonebook):
+    """Deletes the entry of given name. Exact name matches only."""
+
+    phonebook_data = phonebook_exists(phonebook)
+
+    if not phonebook_data.get(name):
+        raise NoEntryError("This entry does not exist! (Names \
+            are case-sensitive.)")
+    else:
+        print "Deleting entry:", name, phonebook_data[name]
+        del phonebook_data[name]
+        save(phonebook_data, phonebook)
 
 def lookup(name, phonebook):
     """Given name, returns any matching entries."""
@@ -125,7 +137,24 @@ def save(data, phonebook):
 
 def main():
     """The main function of the program."""
-    pass
+
+    args = sys.argv[:]
+    script = args.pop(0)
+    print "Script name:", script
+    command = args.pop(0)
+    print "Command name:", command
+
+    functions = {"create": create,
+        "add": add,
+        "update_number": update_number,
+        "update_name": update_name,
+        "delete": delete,
+        "lookup": lookup,
+        "lookup_exact": lookup_exact,
+        "reverse_lookup": reverse_lookup}
+
+    func = functions[command]
+    func(*args)
 
 if __name__ == '__main__':
     main()
