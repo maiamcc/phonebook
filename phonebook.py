@@ -81,8 +81,17 @@ def lookup(name, phonebook):
     if not match:
         print "No matches found."
 
+def lookup_exact(name, phonebook):
+    """Given name, returns its corresponding entry (exact matches only)."""
+    phonebook_data = phonebook_exists(phonebook)
+
+    if phonebook_data.get(name):
+        print name, phonebook_data[name]
+    else:
+        print "No matches found."
+
 def reverse_lookup(number, phonebook):
-    """Given number, returns matching entry (exact match only)."""
+    """Given number, returns all matching entries."""
 
     phonebook_data = phonebook_exists(phonebook)
 
@@ -96,12 +105,6 @@ def reverse_lookup(number, phonebook):
     if not match:
         print "No matches found."
 
-# TODO: lookup_exact and reverse_lookup_exact?
-
-def check_num_format(number):
-    """Checks if a phone number is the right length/format."""
-    pass
-
 def phonebook_exists(phonebook):
     """Returns the dictionary of names/numbers contained in the given
         phonebook file, or throws an error if the file does not exist."""
@@ -111,8 +114,6 @@ def phonebook_exists(phonebook):
     else:
         with open(filename) as infile:
             return cPickle.load(infile)
-
-# TODO: entry_exists
 
 def save(data, phonebook):
     """Saves the dictionary containing phonebook data to the given
