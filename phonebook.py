@@ -8,6 +8,8 @@ class ArgumentError(Exception): pass
 
 class NoFileError(Exception): pass
 
+class NoEntryError(Exception): pass
+
 class DuplicateError(Exception): pass
 
 def create(phonebook_name):
@@ -24,14 +26,46 @@ def add(name, number, phonebook):
     """Adds new entry to specified phonebook."""
     phonebook_data = phonebook_exists(phonebook)
 
-    phonebook_data[name] = number
-    print phonebook_data
+    if phonebook_data.get(name):
+        raise DuplicateError("This entry already exists. To make \
+            changes, use update_number or update_name.")
+    else:
+        phonebook_data[name] = number
+        print phonebook_data
+        save(phonebook_data, phonebook)
+
+
+def update_number(name, number, phonebook):
+    """Updates an entry of given name with new number. Exact
+        name matches only."""
+    phonebook_data = phonebook_exists(phonebook)
+
+    if not phonebook_data.get(name):
+        raise NoEntryError("This entry does not exist! (Names \
+            are case-sensitive.)")
+    else:
+        print "Previous entry:", name, phonebook_data[name]
+        phonebook_data[name] = number
+        print "New entry:", name, phonebook_data[name]
+
     save(phonebook_data, phonebook)
 
+def update_name(old_name, new_name, phonebook):
+    """Updates an entry of given name with new name. Exact
+        name matches only."""
+    phonebook_data = phonebook_exists(phonebook)
 
-def update(name, number, phonebook):
-    """Updates an entry of given name with new number."""
-    pass
+    if not phonebook_data.get(old_name):
+        raise NoEntryError("This entry does not exist! (Names \
+            are case-sensitive.)")
+    else:
+        print "Previous entry:", old_name, phonebook_data[old_name]
+        number = phonebook_data[old_name]
+        del phonebook_data[old_name]
+        phonebook_data[new_name] = number
+        print "New entry:", new_name, phonebook_data[new_name]
+
+    save(phonebook_data, phonebook)
 
 def lookup(name, phonebook):
     """Given name, returns any matching entries."""
@@ -77,6 +111,8 @@ def phonebook_exists(phonebook):
     else:
         with open(filename) as infile:
             return cPickle.load(infile)
+
+# TODO: entry_exists
 
 def save(data, phonebook):
     """Saves the dictionary containing phonebook data to the given
