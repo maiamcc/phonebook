@@ -93,14 +93,12 @@ def lookup(name, phonebook):
     if not match:
         print "No matches found."
 
-def lookup_exact(name, phonebook):
-    """Given name, returns its corresponding entry (exact matches only)."""
+def display(phonebook):
+    """Displays the contents of given phonebook in alphabetical order."""
     phonebook_data = phonebook_exists(phonebook)
 
-    if phonebook_data.get(name):
-        print name, phonebook_data[name]
-    else:
-        print "No matches found."
+    for key in sorted(phonebook_data.keys(), key=str.lower):
+        print key, phonebook_data[key]
 
 def reverse_lookup(number, phonebook):
     """Given number, returns all matching entries."""
@@ -125,7 +123,11 @@ def phonebook_exists(phonebook):
         raise NoFileError("That phonebook doesn not exist!")
     else:
         with open(filename) as infile:
-            return cPickle.load(infile)
+            if infile.read(1):
+                infile.seek(0)
+                return cPickle.load(infile)
+            else:
+                return {}
 
 def save(data, phonebook):
     """Saves the dictionary containing phonebook data to the given
@@ -135,26 +137,37 @@ def save(data, phonebook):
     with open(filename, "w") as outfile:
         cPickle.dump(data, outfile)
 
+# all of the functions in the program, and the arguments that they require
+
+functions = {"create": [create, ["phonebook"]],
+    "add": [add, ["name", "number", "phonebook"]],
+    "update_number": [update_number, ["name", "new number", "phonebook"]],
+    "update_name": [update_name, ["old name", "new name", "phonebook"]],
+    "delete": [delete, ["name", "phonebook"]],
+    "lookup": [lookup, ["name", "phonebook"]],
+    "reverse_lookup": [reverse_lookup, ["number", "phonebook"]],
+    "display": [display, ["phonebook"]]}
+
 def main():
     """The main function of the program."""
 
     args = sys.argv[:]
     script = args.pop(0)
-    print "Script name:", script
-    command = args.pop(0)
-    print "Command name:", command
 
-    functions = {"create": create,
-        "add": add,
-        "update_number": update_number,
-        "update_name": update_name,
-        "delete": delete,
-        "lookup": lookup,
-        "lookup_exact": lookup_exact,
-        "reverse_lookup": reverse_lookup}
+    try:
+        command = args.pop(0)
+    except IndexError:
+        raise ArgumentError("Not enough arguments!")
 
-    func = functions[command]
-    func(*args)
+    try:
+        func = functions[command]
+    except KeyError:
+        raise ArgumentError("Not a valid command.")
+
+    try:
+        func[0](*args)
+    except TypeError:
+        print "Arguments required: %s." % ", ".join(func[1])
 
 if __name__ == '__main__':
     main()
