@@ -1,0 +1,18 @@
+(dp1
+S'Frank Lee Mydear'
+p2
+S'444-444-4444'
+p3
+sS'Ben'
+p4
+S'222-222-2222'
+p5
+sS'Benjamin Franklin'
+p6
+S'333-333-3333'
+p7
+sS'Ali'
+p8
+S'111-111-1111'
+p9
+s.
