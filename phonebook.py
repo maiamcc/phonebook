@@ -28,8 +28,7 @@ def add(name, number, phonebook):
     phonebook_data = phonebook_exists(phonebook)
 
     if phonebook_data.get(name):
-        raise DuplicateError("This entry already exists. To make \
-            changes, use update_number or update_name.")
+        raise DuplicateError("This entry already exists. To make changes, use update_number or update_name.")
     else:
         phonebook_data[name] = number
         print "Entry added:", name, number
@@ -42,8 +41,7 @@ def update_number(name, number, phonebook):
     phonebook_data = phonebook_exists(phonebook)
 
     if not phonebook_data.get(name):
-        raise NoEntryError("This entry does not exist! (Names \
-            are case-sensitive.)")
+        raise NoEntryError("This entry does not exist! (Names are case-sensitive.)")
     else:
         print "Previous entry:", name, phonebook_data[name]
         phonebook_data[name] = number
@@ -56,8 +54,7 @@ def update_name(old_name, new_name, phonebook):
     phonebook_data = phonebook_exists(phonebook)
 
     if not phonebook_data.get(old_name):
-        raise NoEntryError("This entry does not exist! (Names \
-            are case-sensitive.)")
+        raise NoEntryError("This entry does not exist! (Names are case-sensitive.)")
     else:
         print "Previous entry:", old_name, phonebook_data[old_name]
         number = phonebook_data[old_name]
@@ -72,8 +69,7 @@ def delete(name, phonebook):
     phonebook_data = phonebook_exists(phonebook)
 
     if not phonebook_data.get(name):
-        raise NoEntryError("This entry does not exist! (Names \
-            are case-sensitive.)")
+        raise NoEntryError("This entry does not exist! (Names are case-sensitive.)")
     else:
         print "Deleting entry:", name, phonebook_data[name]
         del phonebook_data[name]
