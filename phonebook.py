@@ -89,13 +89,6 @@ def lookup(name, phonebook):
     if not match:
         print "No matches found."
 
-def display(phonebook):
-    """Displays the contents of given phonebook in alphabetical order."""
-    phonebook_data = phonebook_exists(phonebook)
-
-    for key in sorted(phonebook_data.keys(), key=str.lower):
-        print key, phonebook_data[key]
-
 def reverse_lookup(number, phonebook):
     """Given number, returns all matching entries."""
 
@@ -110,6 +103,13 @@ def reverse_lookup(number, phonebook):
 
     if not match:
         print "No matches found."
+
+def display(phonebook):
+    """Displays the contents of given phonebook in alphabetical order."""
+    phonebook_data = phonebook_exists(phonebook)
+
+    for key in sorted(phonebook_data.keys(), key=str.lower):
+        print key, phonebook_data[key]
 
 def phonebook_exists(phonebook):
     """Returns the dictionary of names/numbers contained in the given
