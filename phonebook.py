@@ -180,10 +180,7 @@ def main():
     except KeyError:
         raise ArgumentError("Not a valid command.")
 
-    try:
-        func[0](*args)
-    except TypeError:
-        print "Arguments required: %s." % ", ".join(func[1])
+    func[0](*args)
 
 
 if __name__ == '__main__':
