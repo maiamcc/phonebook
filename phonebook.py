@@ -157,15 +157,15 @@ def save(data, phonebook):
 def main():
     """The main function of the program."""
 
-    # all of the functions in the program, and the arguments that they require
-    functions = {"create": [create, ["phonebook"]],
-        "add": [add, ["name", "number", "phonebook"]],
-        "update_number": [update_number, ["name", "new number", "phonebook"]],
-        "update_name": [update_name, ["old name", "new name", "phonebook"]],
-        "delete": [delete, ["name", "phonebook"]],
-        "lookup": [lookup, ["name", "phonebook"]],
-        "reverse_lookup": [reverse_lookup, ["number", "phonebook"]],
-        "display": [display, ["phonebook"]]}
+    # all of the functions in the program
+    functions = {"create": create,
+        "add": add,
+        "update_number": update_number,
+        "update_name": update_name,
+        "delete": delete,
+        "lookup": lookup,
+        "reverse_lookup": reverse_lookup,
+        "display": display}
 
     args = sys.argv[:]
     script = args.pop(0)
@@ -180,7 +180,7 @@ def main():
     except KeyError:
         raise ArgumentError("Not a valid command.")
 
-    func[0](*args)
+    func(*args)
 
 
 if __name__ == '__main__':
