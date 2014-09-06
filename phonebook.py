@@ -159,13 +159,13 @@ def main():
 
     # all of the functions in the program
     functions = {"create": create,
-        "add": add,
-        "update_number": update_number,
-        "update_name": update_name,
-        "delete": delete,
-        "lookup": lookup,
-        "reverse_lookup": reverse_lookup,
-        "display": display}
+        "add" : add,
+        "update_number" : update_number,
+        "update_name" : update_name,
+        "delete" : delete,
+        "lookup" : lookup,
+        "reverse_lookup" : reverse_lookup,
+        "display" : display}
 
     args = sys.argv[:]
     script = args.pop(0)
