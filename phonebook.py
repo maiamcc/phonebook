@@ -5,13 +5,18 @@ import os
 import cPickle
 import sys
 
+
 class ArgumentError(Exception): pass
+
 
 class NoFileError(Exception): pass
 
+
 class NoEntryError(Exception): pass
 
+
 class DuplicateError(Exception): pass
+
 
 def create(phonebook_name):
     """Creates a new phonebook of the given name (as .txt file)."""
@@ -22,6 +27,7 @@ def create(phonebook_name):
     else:
         with open(filename, "w") as infile:
             pass
+
 
 def add(name, number, phonebook):
     """Adds new entry to specified phonebook."""
@@ -48,6 +54,7 @@ def update_number(name, number, phonebook):
         print "New entry:", name, phonebook_data[name]
         save(phonebook_data, phonebook)
 
+
 def update_name(old_name, new_name, phonebook):
     """Updates an entry of given name with new name. Exact
         name matches only."""
@@ -63,6 +70,7 @@ def update_name(old_name, new_name, phonebook):
         print "New entry:", new_name, phonebook_data[new_name]
         save(phonebook_data, phonebook)
 
+
 def delete(name, phonebook):
     """Deletes the entry of given name. Exact name matches only."""
 
@@ -74,6 +82,7 @@ def delete(name, phonebook):
         print "Deleting entry:", name, phonebook_data[name]
         del phonebook_data[name]
         save(phonebook_data, phonebook)
+
 
 def lookup(name, phonebook):
     """Given name, returns any matching entries."""
@@ -88,6 +97,7 @@ def lookup(name, phonebook):
 
     if not match:
         print "No matches found."
+
 
 def reverse_lookup(number, phonebook):
     """Given number, returns all matching entries."""
@@ -104,12 +114,14 @@ def reverse_lookup(number, phonebook):
     if not match:
         print "No matches found."
 
+
 def display(phonebook):
     """Displays the contents of given phonebook in alphabetical order."""
     phonebook_data = phonebook_exists(phonebook)
 
     for key in sorted(phonebook_data.keys(), key=str.lower):
         print key, phonebook_data[key]
+
 
 def phonebook_exists(phonebook):
     """Returns the dictionary of names/numbers contained in the given
@@ -125,6 +137,7 @@ def phonebook_exists(phonebook):
             else:
                 return {}
 
+
 def save(data, phonebook):
     """Saves the dictionary containing phonebook data to the given
         phonebook, using cPickle."""
@@ -133,8 +146,8 @@ def save(data, phonebook):
     with open(filename, "w") as outfile:
         cPickle.dump(data, outfile)
 
-# all of the functions in the program, and the arguments that they require
 
+# all of the functions in the program, and the arguments that they require
 functions = {"create": [create, ["phonebook"]],
     "add": [add, ["name", "number", "phonebook"]],
     "update_number": [update_number, ["name", "new number", "phonebook"]],
@@ -143,6 +156,7 @@ functions = {"create": [create, ["phonebook"]],
     "lookup": [lookup, ["name", "phonebook"]],
     "reverse_lookup": [reverse_lookup, ["number", "phonebook"]],
     "display": [display, ["phonebook"]]}
+
 
 def main():
     """The main function of the program."""
@@ -164,6 +178,7 @@ def main():
         func[0](*args)
     except TypeError:
         print "Arguments required: %s." % ", ".join(func[1])
+
 
 if __name__ == '__main__':
     main()
