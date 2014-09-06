@@ -20,6 +20,7 @@ class DuplicateError(Exception): pass
 
 def create(phonebook_name):
     """Creates a new phonebook of the given name (as .txt file)."""
+
     filename = phonebook_name + ".txt"
 
     if os.path.exists(filename):
@@ -31,6 +32,7 @@ def create(phonebook_name):
 
 def add(name, number, phonebook):
     """Adds new entry to specified phonebook."""
+
     phonebook_data = phonebook_exists(phonebook)
 
     if phonebook_data.get(name):
@@ -44,6 +46,7 @@ def add(name, number, phonebook):
 def update_number(name, number, phonebook):
     """Updates an entry of given name with new number. Exact
         name matches only."""
+
     phonebook_data = phonebook_exists(phonebook)
 
     if not phonebook_data.get(name):
@@ -58,6 +61,7 @@ def update_number(name, number, phonebook):
 def update_name(old_name, new_name, phonebook):
     """Updates an entry of given name with new name. Exact
         name matches only."""
+
     phonebook_data = phonebook_exists(phonebook)
 
     if not phonebook_data.get(old_name):
@@ -117,6 +121,7 @@ def reverse_lookup(number, phonebook):
 
 def display(phonebook):
     """Displays the contents of given phonebook in alphabetical order."""
+
     phonebook_data = phonebook_exists(phonebook)
 
     for key in sorted(phonebook_data.keys(), key=str.lower):
@@ -126,6 +131,7 @@ def display(phonebook):
 def phonebook_exists(phonebook):
     """Returns the dictionary of names/numbers contained in the given
         phonebook file, or throws an error if the file does not exist."""
+
     filename = phonebook + ".txt"
     if not os.path.exists(filename):
         raise NoFileError("That phonebook doesn not exist!")
@@ -141,6 +147,7 @@ def phonebook_exists(phonebook):
 def save(data, phonebook):
     """Saves the dictionary containing phonebook data to the given
         phonebook, using cPickle."""
+
     filename = phonebook + ".txt"
 
     with open(filename, "w") as outfile:
