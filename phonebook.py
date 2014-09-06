@@ -21,7 +21,7 @@ class DuplicateError(Exception): pass
 def create(phonebook_name):
     """Creates a new phonebook of the given name (as .txt file)."""
 
-    filename = phonebook_name + ".txt"
+    filename = "".join([phonebook_name, ".txt"])
 
     if os.path.exists(filename):
         raise DuplicateError("That phonebook already exists!")
