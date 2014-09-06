@@ -132,16 +132,18 @@ def read_phonebook(phonebook):
     """Returns the dictionary of names/numbers contained in the given
         phonebook file, or throws an error if the file does not exist."""
 
-    filename = phonebook + ".txt"
-    if not os.path.exists(filename):
-        raise NoFileError("That phonebook doesn not exist!")
-    else:
+    filename = "%s.txt" % phonebook
+
+    try:
         with open(filename) as infile:
             if infile.read(1):
                 infile.seek(0)
                 return cPickle.load(infile)
             else:
                 return {}
+
+    except IOError:
+        print "That phonebook does not exist!"
 
 
 def save(data, phonebook):
