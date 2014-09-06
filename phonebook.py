@@ -1,8 +1,8 @@
 # A mini phonebook Python app based off the coding exercise written
     # by Amy Hanlon (HS W '14)
 
-import os
 import cPickle
+import os
 import sys
 
 
