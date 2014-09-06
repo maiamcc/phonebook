@@ -33,7 +33,7 @@ def create(phonebook_name):
 def add(name, number, phonebook):
     """Adds new entry to specified phonebook."""
 
-    phonebook_data = phonebook_exists(phonebook)
+    phonebook_data = read_phonebook_contents(phonebook)
 
     if phonebook_data.get(name):
         raise DuplicateError("This entry already exists. To make changes, use update_number or update_name.")
@@ -47,7 +47,7 @@ def update_number(name, number, phonebook):
     """Updates an entry of given name with new number. Exact
         name matches only."""
 
-    phonebook_data = phonebook_exists(phonebook)
+    phonebook_data = read_phonebook_contents(phonebook)
 
     if not phonebook_data.get(name):
         raise NoEntryError("This entry does not exist! (Names are case-sensitive.)")
@@ -62,7 +62,7 @@ def update_name(old_name, new_name, phonebook):
     """Updates an entry of given name with new name. Exact
         name matches only."""
 
-    phonebook_data = phonebook_exists(phonebook)
+    phonebook_data = read_phonebook_contents(phonebook)
 
     if not phonebook_data.get(old_name):
         raise NoEntryError("This entry does not exist! (Names are case-sensitive.)")
@@ -78,7 +78,7 @@ def update_name(old_name, new_name, phonebook):
 def delete(name, phonebook):
     """Deletes the entry of given name. Exact name matches only."""
 
-    phonebook_data = phonebook_exists(phonebook)
+    phonebook_data = read_phonebook_contents(phonebook)
 
     if not phonebook_data.get(name):
         raise NoEntryError("This entry does not exist! (Names are case-sensitive.)")
@@ -91,7 +91,7 @@ def delete(name, phonebook):
 def lookup(name, phonebook):
     """Given name, returns any matching entries."""
 
-    phonebook_data = phonebook_exists(phonebook)
+    phonebook_data = read_phonebook_contents(phonebook)
 
     match = False
     for key in phonebook_data:
@@ -106,7 +106,7 @@ def lookup(name, phonebook):
 def reverse_lookup(number, phonebook):
     """Given number, returns all matching entries."""
 
-    phonebook_data = phonebook_exists(phonebook)
+    phonebook_data = read_phonebook_contents(phonebook)
 
     match = False
     for key, value in phonebook_data.iteritems():
@@ -122,13 +122,13 @@ def reverse_lookup(number, phonebook):
 def display(phonebook):
     """Displays the contents of given phonebook in alphabetical order."""
 
-    phonebook_data = phonebook_exists(phonebook)
+    phonebook_data = read_phonebook_contents(phonebook)
 
     for key in sorted(phonebook_data.keys(), key=str.lower):
         print key, phonebook_data[key]
 
 
-def phonebook_exists(phonebook):
+def read_phonebook_contents(phonebook):
     """Returns the dictionary of names/numbers contained in the given
         phonebook file, or throws an error if the file does not exist."""
 
