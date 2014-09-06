@@ -148,7 +148,7 @@ def save(data, phonebook):
     """Saves the dictionary containing phonebook data to the given
         phonebook, using cPickle."""
 
-    filename = phonebook + ".txt"
+    filename = "%s.txt" % phonebook
 
     with open(filename, "w") as outfile:
         cPickle.dump(data, outfile)
