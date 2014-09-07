@@ -143,10 +143,9 @@ def read_phonebook(phonebook):
 
     try:
         with open(filename) as infile:
-            if infile.read(1):
-                infile.seek(0)
+            try:
                 return cPickle.load(infile)
-            else:
+            except EOFError:
                 return {}
 
     except IOError:
