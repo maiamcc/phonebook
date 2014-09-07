@@ -103,7 +103,7 @@ def lookup(name, phonebook):
 
     match = False
     for key in phonebook_data:
-        if key.lower().find(name.lower()) > -1:
+        if name.lower() in key.lower():
             match = True
             print key, phonebook_data[key]
 
