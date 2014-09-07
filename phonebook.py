@@ -102,10 +102,10 @@ def lookup(name, phonebook):
     phonebook_data = read_phonebook(phonebook)
 
     match = False
-    for key in phonebook_data:
-        if name.lower() in key.lower():
+    for entry_name in phonebook_data:
+        if name.lower() in entry_name.lower():
             match = True
-            print key, phonebook_data[key]
+            print entry_name, phonebook_data[entry_name]
 
     if not match:
         print "No matches found."
