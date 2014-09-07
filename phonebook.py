@@ -117,11 +117,10 @@ def reverse_lookup(number, phonebook):
     phonebook_data = read_phonebook(phonebook)
 
     match = False
-    for key, value in phonebook_data.iteritems():
-        if value.find(number) > -1:
-            print key, value
+    for entry_name, entry_number in phonebook_data.iteritems():
+        if number in entry_number:
+            print entry_name, entry_number
             match = True
-            break
 
     if not match:
         print "No matches found."
