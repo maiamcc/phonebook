@@ -131,8 +131,8 @@ def display(phonebook):
 
     phonebook_data = read_phonebook(phonebook)
 
-    for key in sorted(phonebook_data.keys(), key=str.lower):
-        print key, phonebook_data[key]
+    for name in sorted(phonebook_data.keys(), key=str.lower):
+        print name, phonebook_data[name]
 
 
 def read_phonebook(phonebook):
