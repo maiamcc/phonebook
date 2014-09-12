@@ -19,9 +19,11 @@ class DuplicateError(Exception): pass
 
 
 def create(phonebook_name):
-    """Creates a new phonebook of the given name (as .txt file)."""
+    """Creates a new phonebook of the given name. (If given name
+        is not a .pb file, adds '.pb'.)"""
 
-    filename = "%s.txt" % phonebook_name
+    if phonebook_name[:-3] != ".pb":
+        phonebook_name = "%s.pb" % phonebook_name
 
     if os.path.exists(filename):
         raise DuplicateError("That phonebook already exists!")
@@ -139,10 +141,8 @@ def read_phonebook(phonebook):
     """Returns the dictionary of names/numbers contained in the given
         phonebook file, or throws an error if the file does not exist."""
 
-    filename = "%s.txt" % phonebook
-
     try:
-        with open(filename) as infile:
+        with open(phonebook) as infile:
             try:
                 return cPickle.load(infile)
             except EOFError:
@@ -156,9 +156,7 @@ def save(data, phonebook):
     """Saves the dictionary containing phonebook data to the given
         phonebook, using cPickle."""
 
-    filename = "%s.txt" % phonebook
-
-    with open(filename, "w") as outfile:
+    with open(phonebook, "w") as outfile:
         cPickle.dump(data, outfile)
 
 
