@@ -5,6 +5,8 @@ import cPickle
 import os
 import sys
 
+# extension expected for all phonebooks
+EXTENSION = ".pb"
 
 class ArgumentError(Exception): pass
 
@@ -22,8 +24,8 @@ def create(phonebook_name):
     """Creates a new phonebook of the given name. (If given name
         is not a .pb file, adds '.pb'.)"""
 
-    if phonebook_name[:-3] != ".pb":
-        phonebook_name = "%s.pb" % phonebook_name
+    if not phonebook_name.endswith(EXTENSION):
+        phonebook_name = "%s%s" % (phonebook_name, EXTENSION)
 
     if os.path.exists(filename):
         raise DuplicateError("That phonebook already exists!")
@@ -136,6 +138,13 @@ def display(phonebook):
     for name in sorted(phonebook_data.keys(), key=str.lower):
         print name, phonebook_data[name]
 
+def list_phonebooks(path="."):
+    """Lists all phonebooks (i.e. '.pb' files) at the top level of
+        the given path. If no path is given, assumes the root dir."""
+    files = os.listdir(path)
+    for file in files:
+        if file.endswith(EXTENSION):
+            print file
 
 def read_phonebook(phonebook):
     """Returns the dictionary of names/numbers contained in the given
@@ -171,7 +180,8 @@ def main():
         "delete" : delete,
         "lookup" : lookup,
         "reverse_lookup" : reverse_lookup,
-        "display" : display}
+        "display" : display,
+        "list_phonebooks" : list_phonebooks}
 
     args = sys.argv[:]
     script = args.pop(0)
